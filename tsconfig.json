@@ -1,0 +1,14 @@
+{
+    "references": [],
+    "compilerOptions": {
+        "strict": true,
+        "strictNullChecks": true,
+        "esModuleInterop": true,
+        "module": "CommonJS",
+        "paths": {
+            "@/*": ["./src/*"]
+        },
+        "outDir": "dist"
+    },
+    "include": ["index.ts", "main.ts", "./src/**/*.ts"]
+}
