@@ -4,7 +4,8 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "tsc -p tsconfig.json",
+        "build": "esbuild main.ts --platform=node --bundle --outdir=dist --format=esm",
+        "lint": "tsc",
         "test": "jest"
     },
     "keywords": [],
@@ -14,6 +15,7 @@
         "@types/copy-paste": "^1.1.30",
         "@types/fs-extra": "^11.0.1",
         "@types/jest": "^29.5.3",
+        "esbuild": "^0.19.2",
         "mock-stdin": "^1.0.0",
         "nodemon": "^3.0.1",
         "ts-jest": "^29.1.1",
