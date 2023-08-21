@@ -4,7 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "build": "esbuild main.ts --platform=node --bundle --outdir=dist --format=esm",
+        "build": "node build",
         "lint": "tsc",
         "test": "jest"
     },
