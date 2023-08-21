@@ -1,6 +1,6 @@
 {
     "name": "@anfo/huifs",
-    "version": "0.0.6",
+    "version": "0.0.7",
     "description": "",
     "type": "module",
     "files": [
@@ -9,15 +9,10 @@
     "types": "./dist/index.d.ts",
     "main": "./dist/index.cjs",
     "module": "./dist/index.js",
-    "exports": {
-        ".": {
-            "require": "./dist/index.cjs",
-            "import": "./dist/index.js"
-        }
-    },
     "scripts": {
         "prepublishOnly": "npm run build",
-        "build": "rm -rf dist && npm run build:types && node build",
+        "prebuild": "rimraf dist",
+        "build": "npm run build:types && node build",
         "build:types": "tsc --emitDeclarationOnly",
         "lint": "tsc --noEmit",
         "test": "jest --coverage"
@@ -44,6 +39,7 @@
         "mock-stdin": "^1.0.0",
         "nodemon": "^3.0.1",
         "pkg-up": "^4.0.0",
+        "rimraf": "^5.0.1",
         "ts-node": "^10.9.1",
         "typescript": "^5.1.6"
     }
