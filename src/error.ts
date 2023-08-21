@@ -10,10 +10,10 @@ export class ServiceError extends Error {
 }
 export function catchServiceError<T>(
     err: T,
-    level: 'debug' | 'error' | 'warn' | 'info' = 'debug'
+    _level: 'debug' | 'error' | 'warn' | 'info' = 'debug'
 ) {
     if (err instanceof ServiceError) {
-        console[level]('service error: ', ...err.messages)
+        // console[_level]('service error: ', ...err.messages)
     } else {
         throw err
     }

@@ -6,7 +6,7 @@
     "scripts": {
         "build": "node build",
         "lint": "tsc",
-        "test": "jest --coverage --verbose"
+        "test": "jest --coverage"
     },
     "keywords": [],
     "author": "",
