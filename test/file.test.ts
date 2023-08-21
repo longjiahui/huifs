@@ -1,7 +1,7 @@
 import { catchServiceError } from '@/error'
 import { applyFileDescriptors, validateDescriptors } from '@/file'
 import { forExistsTestDir, forExistsTestFile, forTestPath } from '@/utils'
-import { existsSync, readFile, rmdir, writeFile } from 'fs-extra'
+import { readFile, rmdir, writeFile } from 'fs-extra'
 import { stdin } from 'mock-stdin'
 import path from 'node:path'
 

@@ -1,5 +1,5 @@
 import { ServiceError } from '@/error'
-import { Command } from 'commander'
+import type { Command } from 'commander'
 import { paste } from 'copy-paste'
 
 export enum DataSource {

@@ -5,11 +5,11 @@
         "esModuleInterop": true,
         "module": "CommonJS",
         "declaration": true,
-        "noEmit": true,
+        "removeComments": true,
+        "outDir": "dist",
         "paths": {
             "@/*": ["./src/*"]
-        },
-        "removeComments": true,
-        "outDir": "dist"
-    }
+        }
+    },
+    "include": ["src/**/*.ts"]
 }
