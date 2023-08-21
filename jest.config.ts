@@ -6,4 +6,8 @@ export default {
     moduleNameMapper: {
         '^@/(.*)$': '<rootDir>/src/$1',
     },
+    transform: {
+        'node_modules/variables/.+\\.(j|t)sx?$': 'ts-jest',
+    },
+    transformIgnorePatterns: ['node_modules/(?!variables/.*)'],
 } as JestConfigWithTsJest

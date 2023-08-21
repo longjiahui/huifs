@@ -1,21 +1,18 @@
 import { copyText, pasteText } from '@/utils'
 import { DataSource, getDataFromDataSource } from '@/datasource'
-import { ServiceError } from '@/error'
+import { catchServiceError } from '@/error'
 
 describe('datasource', () => {
     it('incorrect from option', async () => {
-        try {
-            await getDataFromDataSource({
-                from: 'hello',
-                base64Data: '',
+        await getDataFromDataSource({
+            from: 'hello',
+            base64Data: '',
+        })
+            .then(() => {
+                expect(true).toBe(false)
             })
-            // should not execute
-            expect(true).toBe(false)
-        } catch (err) {
-            if (!(err instanceof ServiceError)) {
-                throw err
-            }
-        }
+            .catch(catchServiceError)
+        // should not execute
     })
 
     it('get text datasource from clipboard', async () => {

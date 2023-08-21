@@ -8,3 +8,13 @@ export class ServiceError extends Error {
         this.message = message
     }
 }
+export function catchServiceError<T>(
+    err: T,
+    level: 'debug' | 'error' | 'warn' | 'info' = 'debug'
+) {
+    if (err instanceof ServiceError) {
+        console[level]('service error: ', ...err.messages)
+    } else {
+        throw err
+    }
+}
