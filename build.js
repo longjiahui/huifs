@@ -1,13 +1,7 @@
 import * as esbuild from 'esbuild'
 // const esbuild = require('esbuild')
 
-const entry = [
-    'src/index.ts',
-    'src/utils.ts',
-    'src/file.ts',
-    'src/datasource.ts',
-    'src/error.ts',
-]
+const entry = ['src/index.ts']
 
 ;(async () => {
     await esbuild.build({
@@ -29,7 +23,7 @@ const __dirname = (await import("node:path")).dirname(__filename);
     })
 
     await esbuild.build({
-        entryPoints: ['src/index.ts'],
+        entryPoints: [...entry],
         bundle: true,
         outfile: 'dist/index.cjs',
         format: 'cjs',
