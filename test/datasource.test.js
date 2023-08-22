@@ -1,6 +1,11 @@
-import { copyText, pasteText } from '@/utils'
-import { DataSource, getDataFromDataSource } from '@/datasource'
-import { catchServiceError } from '@/error'
+import { copyText, pasteText } from '../src/utils.js'
+import {
+    getDataFromDataSource,
+    DS_CLIPBOARD,
+    FT_BASE64,
+    DS_STDIN,
+} from '../src/datasource.js'
+import { catchServiceError } from '../src/error.js'
 
 describe('datasource', () => {
     it('incorrect from option', async () => {
@@ -22,7 +27,7 @@ describe('datasource', () => {
         try {
             expect(
                 await getDataFromDataSource({
-                    from: DataSource.cilpboard,
+                    from: DS_CLIPBOARD,
                 })
             ).toBe(testText)
         } finally {
@@ -34,8 +39,9 @@ describe('datasource', () => {
         const data = 'hello world'
         expect(
             await getDataFromDataSource({
-                from: DataSource.base64,
-                base64Data: btoa(data),
+                from: DS_STDIN,
+                fromType: FT_BASE64,
+                data: btoa(data),
             })
         ).toBe(data)
     })

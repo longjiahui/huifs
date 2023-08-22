@@ -1,17 +1,25 @@
-import { catchServiceError } from '@/error'
-import { applyFileDescriptors, validateDescriptors } from '@/file'
-import { forExistsTestDir, forExistsTestFile, forTestPath } from '@/utils'
-import { readFile, rmdir, writeFile } from 'fs-extra'
+import { catchServiceError } from '../src/error.js'
+import { applyFileDescriptors, validateDescriptors } from '../src/file.js'
+import {
+    forExistsTestDir,
+    forExistsTestFile,
+    forTestPath,
+} from '../src/utils.js'
+import fs from '../src/fs.js'
 import { stdin } from 'mock-stdin'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url))
+const __filename = path.resolve(fileURLToPath(import.meta.url))
 
 beforeEach(async () => {
-    await rmdir(forExistsTestDir(), { recursive: true })
+    await fs.rmdir(forExistsTestDir(), { recursive: true })
     forExistsTestDir()
 })
 
 afterEach(async () => {
-    await rmdir(forExistsTestDir(), { recursive: true })
+    await fs.rmdir(forExistsTestDir(), { recursive: true })
 })
 
 describe('validateDescriptors', () => {
@@ -85,7 +93,7 @@ describe('applyFileDescriptors', () => {
         // prepare file
         const p = forExistsTestFile('test')
         const originalContent = 'mark$1mark$1mark'
-        await writeFile(p, originalContent)
+        await fs.writeFile(p, originalContent)
         // update
         const toBeInsert = 'helloworld'
         const input = stdin()
@@ -101,7 +109,7 @@ describe('applyFileDescriptors', () => {
         })
         await promise
         input.send(null)
-        expect((await readFile(p)).toString('utf-8')).toBe(
+        expect((await fs.readFile(p)).toString('utf-8')).toBe(
             originalContent.replace(/\$1/g, `$1${toBeInsert}`)
         )
     })
@@ -123,7 +131,7 @@ describe('applyFileDescriptors', () => {
         })
         await promise
         input.send(null)
-        expect((await readFile(p)).toString('utf-8')).toBe(content)
+        expect((await fs.readFile(p)).toString('utf-8')).toBe(content)
     })
 
     test('create-force', async () => {
@@ -137,13 +145,13 @@ describe('applyFileDescriptors', () => {
                 forceCreate: true,
             },
         ])
-        expect((await readFile(p)).toString('utf-8')).toBe(content)
+        expect((await fs.readFile(p)).toString('utf-8')).toBe(content)
     })
     test('update-force', async () => {
         // prepare file
         const p = forExistsTestFile('test')
         const originalContent = 'mark$1mark$1mark'
-        await writeFile(p, originalContent)
+        await fs.writeFile(p, originalContent)
         // update
         const toBeInsert = 'helloworld'
         await applyFileDescriptors([
@@ -154,7 +162,7 @@ describe('applyFileDescriptors', () => {
                 forceReplace: true,
             },
         ])
-        expect((await readFile(p)).toString('utf-8')).toBe(
+        expect((await fs.readFile(p)).toString('utf-8')).toBe(
             originalContent.replace(/\$1/g, `$1${toBeInsert}`)
         )
     })

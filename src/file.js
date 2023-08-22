@@ -1,22 +1,10 @@
-import fs, { ensureFile, ensureFileSync, readFile, writeFile } from 'fs-extra'
-import { ServiceError } from '@/error'
+import fs from './fs.js'
+import { ServiceError } from './error.js'
 import { confirm } from '@inquirer/prompts'
 import path from 'node:path'
 
-interface Descriptor {
-    // type: 'update' | 'new'
-    path: string
-    content: string
-    // when Update 'append'
-    execRegExp?: RegExp
-
-    // when create default false
-    forceCreate?: boolean
-    // when update defualt false
-    forceReplace?: boolean
-}
-
-export async function validateDescriptors(ds: Descriptor[]) {
+// ds : Descriptor[]
+export async function validateDescriptors(ds) {
     // filter
     ds = ds
         .filter((d) => {
@@ -60,22 +48,23 @@ export async function validateDescriptors(ds: Descriptor[]) {
     }
 }
 
-export async function applyFileDescriptors(ds: Descriptor[]) {
+// ds: Descriptor[]
+export async function applyFileDescriptors(ds) {
     await validateDescriptors(ds)
     await Promise.all(
         ds.map(async (d) => {
             const p = path.resolve(d.path)
-            await ensureFile(p)
+            await fs.ensureFile(p)
             if (d.execRegExp) {
                 // replace some
-                const originalContent = (await readFile(p)).toString('utf-8')
-                await writeFile(
+                const originalContent = (await fs.readFile(p)).toString('utf-8')
+                await fs.writeFile(
                     p,
                     originalContent.replace(d.execRegExp, d.content)
                 )
             } else {
                 // replace all
-                await writeFile(p, d.content)
+                await fs.writeFile(p, d.content)
             }
         })
     )
